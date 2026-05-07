@@ -1,0 +1,75 @@
+.dashboard{
+font-family:Arial;
+padding:20px;
+background:#f4f7f5;
+min-height:100vh;
+}
+
+/* Navbar */
+
+.dashboard-navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#2f5d50;
+color:white;
+padding:15px 30px;
+}
+
+.logo{
+font-size:20px;
+font-weight:bold;
+}
+
+.nav-links span{
+margin-left:20px;
+cursor:pointer;
+}
+
+/* Title */
+
+.dashboard-title{
+text-align:center;
+margin:30px 0;
+}
+
+/* Cards */
+
+.card-row{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-bottom:20px;
+}
+
+.card{
+background:white;
+padding:30px;
+width:180px;
+text-align:center;
+border-radius:8px;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* Graph */
+
+.graph-box{
+background:white;
+padding:40px;
+margin:30px auto;
+width:60%;
+text-align:center;
+border-radius:8px;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* Alerts */
+
+.alerts-box{
+background:white;
+padding:20px;
+width:60%;
+margin:auto;
+border-radius:8px;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}

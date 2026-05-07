@@ -1,0 +1,39 @@
+/* container layout */
+.contact-container {
+  display: flex;
+  gap: 60px;
+}
+
+/* each column */
+.contact-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* boxes like login-box */
+.contact-box {
+  width: 280px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.contact-box h3 {
+  color: #1f4d3a;
+  margin-bottom: 10px;
+}
+
+.contact-box p {
+  margin: 5px 0;
+}
+
+/* email link */
+.contact-box a {
+  color: #2f5d50;
+  text-decoration: none;
+}
+
+.contact-box a:hover {
+  text-decoration: underline;
+}

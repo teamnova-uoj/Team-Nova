@@ -1,0 +1,38 @@
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 50px;
+background:white;
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
+color:#1f4d3a;
+}
+
+.nav-links{
+display:flex;
+list-style:none;
+gap:40px;
+font-size:16px;
+}
+
+.nav-links li{
+cursor:pointer;
+}
+
+.register-btn{
+background:#d7e7dc;
+color:#1f4d3a;
+border:none;
+padding:10px 25px;
+border-radius:20px;
+font-weight:600;
+cursor:pointer;
+}
+
+.register-btn:hover{
+background:#c9dccf;
+}

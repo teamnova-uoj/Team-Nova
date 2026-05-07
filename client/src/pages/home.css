@@ -1,0 +1,64 @@
+.hero{
+height:90vh;
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+padding:60px;
+}
+
+/* login card */
+
+.login-box{
+width:300px;
+background:rgba(255,255,255,0.85);
+padding:25px;
+border-radius:15px;
+margin-right:80px;
+}
+
+.login-box h2{
+margin-bottom:20px;
+color:#1f4d3a;
+}
+
+.login-box input{
+width:100%;
+padding:10px;
+margin-bottom:15px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+.login-btn{
+width:100%;
+padding:10px;
+background:#2f5d50;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.forgot{
+font-size:12px;
+margin-top:10px;
+}
+
+/* right content */
+
+.content{
+color:#1c3d35;
+}
+
+.content h1{
+font-size:50px;
+}
+
+.info-box{
+margin-top:20px;
+background:rgba(255,255,255,0.8);
+padding:25px;
+border-radius:12px;
+max-width:550px;
+}

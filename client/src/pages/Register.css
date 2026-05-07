@@ -1,0 +1,62 @@
+.register-page {
+  height: 100vh;
+}
+
+/* reuse same hero style */
+.hero {
+  height: 90vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;   /* center box */
+  align-items: center;
+}
+
+/* Register box (same style as login-box) */
+.register-box {
+  width: 320px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.register-box h2 {
+  margin-bottom: 20px;
+  color: #1f4d3a;
+  text-align: center;
+}
+
+.register-box label {
+  font-size: 14px;
+}
+
+.register-box input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* button same as login */
+.register-btn {
+  width: 100%;
+  padding: 10px;
+  background: #2f5d50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.register-btn:hover {
+  background: #25483e;
+}
+
+/* error text */
+.error {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 10px;
+  display: block;
+}

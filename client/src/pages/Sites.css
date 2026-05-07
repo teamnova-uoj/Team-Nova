@@ -1,0 +1,26 @@
+/* container inside hero */
+.sites-container {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* site cards → same style as login-box */
+.site-card {
+  width: 280px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.site-card h3 {
+  color: #1f4d3a;
+  margin-bottom: 10px;
+}
+
+.site-card p {
+  margin: 5px 0;
+}
