@@ -6,137 +6,70 @@ function VisitorContactus() {
   return (
     <div className="visitor-contact-page">
 
-      {/* Navbar */}
+      {/* Home Navbar */}
       <Navbar />
 
-
-      {/* Full Screen Background Section */}
-
-      <section
+      {/* Background */}
+      <div
         className="visitor-contact-hero"
-        style={{
-          backgroundImage: `url(${mangrove})`
-        }}
+        style={{ backgroundImage: `url(${mangrove})` }}
       >
 
-        {/* Dark Overlay */}
+        <div className="visitor-contact-container">
 
-        <div className="visitor-contact-overlay">
+          <h1>Contact Us</h1>
 
+          <p className="visitor-contact-text">
+            Have questions or need assistance?
+            Send us a message and we'll respond as soon as possible.
+          </p>
 
-          {/* Contact Card */}
+          <form className="visitor-contact-form">
 
-          <div className="visitor-contact-container">
+            <input
+              type="text"
+              placeholder="Full Name"
+            />
 
+            <input
+              type="email"
+              placeholder="Email Address"
+            />
 
-            {/* Contact Information */}
+            <input
+              type="text"
+              placeholder="Subject"
+            />
 
-            <div className="visitor-contact-info">
+            <textarea
+              rows="6"
+              placeholder="Write your message..."
+            ></textarea>
 
-              <h2>
-                📞 Contact Information
-              </h2>
+            <button type="submit">
+              Send Message
+            </button>
 
+          </form>
 
-              <p>
-                <strong>Email:</strong> mangroveguard@gmail.com
-              </p>
+          <div className="visitor-contact-info">
 
+            <h3>Contact Information</h3>
 
-              <p>
-                <strong>Phone:</strong> +94 77 123 4567
-              </p>
+            <p><strong>Email:</strong> mangroveguard@gmail.com</p>
 
+            <p><strong>Phone:</strong> +94 77 123 4567</p>
 
-              <p>
-                <strong>Address:</strong> University of Jaffna, Sri Lanka
-              </p>
-
-
-            </div>
-
-
-
-            {/* Title */}
-
-            <h1>
-              Contact Us
-            </h1>
-
-
-
-            <p className="visitor-contact-text">
-
-              Have questions or need assistance?
-              Send us a message and our team will respond as soon as possible.
-
-            </p>
-
-
-
-
-            {/* Contact Form */}
-
-            <form className="visitor-contact-form">
-
-
-              <div className="input-row">
-
-
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                />
-
-
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                />
-
-
-              </div>
-
-
-
-
-              <input
-                type="text"
-                placeholder="Subject"
-              />
-
-
-
-
-              <textarea
-                rows="4"
-                placeholder="Write your message..."
-              ></textarea>
-
-
-
-
-              <button type="submit">
-                Send Message
-              </button>
-
-
-            </form>
-
-
+            <p><strong>Address:</strong> University of Jaffna, Sri Lanka</p>
 
           </div>
 
-
         </div>
 
-
-      </section>
-
+      </div>
 
     </div>
   );
 }
-
 
 export default VisitorContactus;

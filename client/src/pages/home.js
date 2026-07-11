@@ -1,176 +1,102 @@
-import { Link } from "react-router-dom";
 import "./home.css";
 import Navbar from "../components/navbar";
 import mangrove from "../assests/mangrove.png";
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const { login, isAdmin } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      const user = await login(email, password);
+
+      // Redirect based on role
+      if (user.role === "admin") {
+        navigate("/admin-dashboard");
+      } else {
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "Login failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="home">
-
-      {/* Navigation Bar */}
       <Navbar />
 
-      {/* Hero Section */}
-      <section
+      <div
         className="hero"
         style={{ backgroundImage: `url(${mangrove})` }}
       >
-        <div className="hero-overlay">
+        <div className="login-box">
+          <h2>Login</h2>
 
-          <div className="hero-content">
-            <h1>Mangrove Guard</h1>
+          <form onSubmit={handleLogin}>
 
-            <h3>
-              Monitoring Mangrove Ecosystem & Water Quality
-            </h3>
+            {error && (
+              <p style={{ color: "red", fontSize: "14px", marginBottom: "10px" }}>
+                {error}
+              </p>
+            )}
 
-            <p className="hero-description">
+            <label>Email Address</label>
+            <input
+              type="email"
+              placeholder="Email Address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+
+            <label>Password</label>
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+
+            <button className="login-btn" disabled={loading}>
+              {loading ? "Logging in..." : "Log In"}
+            </button>
+
+            <p className="forgot">Forgot password?</p>
+
+          </form>
+        </div>
+
+        <div className="content">
+          <h1>Mangrove Guard</h1>
+          <h3>Monitoring Mangrove Ecosystem & Water Quality</h3>
+          <div className="info-box">
+            <p>
+              Welcome to Mangrove Guard, your comprehensive solution for
+              monitoring and protecting mangrove ecosystems.
+            </p>
+            <p>
               Our mission is to ensure the health and preservation of vital
               mangrove forests through advanced monitoring and data analysis.
             </p>
-
-            <div className="hero-buttons">
-              <Link to="/visitor-about">
-                <button className="learn-btn">
-                  Learn More
-                </button>
-              </Link>
-
-              <Link to="/visitor-sites">
-                <button className="sites-btn">
-                  View Monitoring Sites
-                </button>
-              </Link>
-            </div>
           </div>
-
-        </div>
-      </section>
-
-      {/* ================= About Mangroves Section ================= */}
-
-      <section className="about-section">
-
-        <h2>Why Mangroves Matter</h2>
-
-        <p className="section-intro">
-          Mangroves are among the world's most valuable coastal ecosystems.
-          They protect shorelines, improve water quality, support biodiversity,
-          and help combat climate change by storing large amounts of carbon.
-        </p>
-
-        <div className="about-grid">
-
-          <div className="about-card">
-            <h3>🌿 What are Mangroves?</h3>
-
-            <p>
-              Mangroves are salt-tolerant trees and shrubs that grow along
-              tropical and subtropical coastlines. Their complex root systems
-              stabilize coastal soils and provide habitats for many species.
-            </p>
-          </div>
-
-          <div className="about-card">
-            <h3>🌊 Why Monitor Water Quality?</h3>
-
-            <p>
-              Water salinity, temperature and water level directly affect
-              mangrove health. Continuous monitoring helps detect changes early
-              and supports effective conservation efforts.
-            </p>
-          </div>
-
-          <div className="about-card">
-            <h3>🐟 Rich Biodiversity</h3>
-
-            <p>
-              Mangrove forests provide breeding and nursery habitats for fish,
-              crabs, shrimp, birds and many endangered wildlife species.
-            </p>
-          </div>
-
-          <div className="about-card">
-            <h3>🌎 Climate Protection</h3>
-
-            <p>
-              Mangroves capture and store significantly more carbon than most
-              terrestrial forests, making them an important natural solution
-              for reducing climate change.
-            </p>
-          </div>
-
-          <div className="about-card">
-            <h3>🛡 Coastal Protection</h3>
-
-            <p>
-              Dense mangrove roots reduce coastal erosion and protect nearby
-              communities from storms, floods and tidal waves.
-            </p>
-          </div>
-
-          <div className="about-card">
-            <h3>📊 Smart Monitoring</h3>
-
-            <p>
-              Mangrove Guard provides real-time monitoring of water level,
-              salinity, temperature and battery status to assist researchers
-              and environmental authorities.
-            </p>
-          </div>
-
         </div>
 
-      </section>
-
-      {/* ================= FAQ Section ================= */}
-
-      <section className="faq-section">
-
-        <h2>Frequently Asked Questions</h2>
-
-        <div className="faq-container">
-
-          <div className="faq-item">
-            <h3>Why are mangroves important?</h3>
-
-            <p>
-              Mangroves protect coastlines, support fisheries, improve water
-              quality and absorb large amounts of carbon dioxide.
-            </p>
-          </div>
-
-          <div className="faq-item">
-            <h3>What parameters are monitored?</h3>
-
-            <p>
-              Water level, salinity, water temperature and device battery
-              status are monitored in real time.
-            </p>
-          </div>
-
-          <div className="faq-item">
-            <h3>Who can use this system?</h3>
-
-            <p>
-              Researchers, environmental organizations, government agencies
-              and conservation volunteers can use the monitoring platform.
-            </p>
-          </div>
-
-          <div className="faq-item">
-            <h3>How does real-time monitoring help?</h3>
-
-            <p>
-              It helps detect environmental changes early, enabling faster
-              conservation decisions and better ecosystem management.
-            </p>
-          </div>
-
-        </div>
-
-      </section>
-
+      </div>
     </div>
   );
 }

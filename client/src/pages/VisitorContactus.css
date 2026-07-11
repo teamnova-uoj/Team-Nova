@@ -1,409 +1,106 @@
-/* ===============================
-   VISITOR CONTACT PAGE
-================================ */
-
-
-.visitor-contact-page {
-
-    width:100%;
-
+.visitor-contact-page{
+    font-family:Arial, sans-serif;
     min-height:100vh;
-
-    font-family:Arial, Helvetica, sans-serif;
-
-    overflow-x:hidden;
-
 }
 
-
-
-/* ===============================
-   FULL SCREEN BACKGROUND
-================================ */
-
-
-.visitor-contact-hero {
-
-    width:100%;
-
-    min-height:100vh;
-
+.visitor-contact-hero{
+    min-height:90vh;
     background-size:cover;
-
     background-position:center;
-
-    background-repeat:no-repeat;
-
-    background-attachment:fixed;
-
-}
-
-
-
-/* ===============================
-   DARK OVERLAY
-================================ */
-
-
-.visitor-contact-overlay {
-
-
-    width:100%;
-
-    min-height:100vh;
-
-
-    background:rgba(0,0,0,0.5);
-
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
-
-    padding:40px 20px;
-
-
+    padding:60px 20px;
 }
 
-
-
-/* ===============================
-   CONTACT CARD
-================================ */
-
-
-.visitor-contact-container {
-
-
-    width:850px;
-
-
-    max-width:95%;
-
-
-    background:rgba(255,255,255,0.95);
-
-
-    border-radius:20px;
-
-
-    padding:30px;
-
-
-    margin-top:70px;
-
-
-    box-shadow:
-    0 15px 35px rgba(0,0,0,0.4);
-
-
-    text-align:center;
-
-
-}
-
-
-
-
-/* ===============================
-   CONTACT INFORMATION BOX
-================================ */
-
-
-.visitor-contact-info {
-
-
-    background:#0b5d3b;
-
-
-    color:white;
-
-
+.visitor-contact-container{
+    width:700px;
+    background:rgba(255,255,255,0.88);
+    padding:40px;
     border-radius:15px;
-
-
-    padding:20px;
-
-
-    margin-bottom:20px;
-
-
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
 }
 
-
-
-.visitor-contact-info h2 {
-
-
-    font-size:26px;
-
-
+.visitor-contact-container h1{
+    text-align:center;
+    color:#1f4d3a;
     margin-bottom:15px;
-
-
 }
 
-
-
-.visitor-contact-info p {
-
-
-    margin:8px;
-
-
-    font-size:16px;
-
-
-}
-
-
-
-
-
-/* ===============================
-   TITLE
-================================ */
-
-
-.visitor-contact-container h1 {
-
-
-    color:#0b5d3b;
-
-
-    font-size:42px;
-
-
-    margin:15px 0;
-
-
-}
-
-
-
-
-/* ===============================
-   DESCRIPTION
-================================ */
-
-
-.visitor-contact-text {
-
-
+.visitor-contact-text{
+    text-align:center;
     color:#444;
-
-
-    font-size:17px;
-
-
-    margin-bottom:25px;
-
-
+    margin-bottom:30px;
+    line-height:1.6;
 }
 
-
-
-
-
-/* ===============================
-   FORM
-================================ */
-
-
-.visitor-contact-form {
-
-
+.visitor-contact-form{
     display:flex;
-
-
     flex-direction:column;
-
-
-    gap:15px;
-
-
 }
-
-
-
-.input-row {
-
-
-    display:flex;
-
-
-    gap:15px;
-
-
-}
-
-
-
-
 
 .visitor-contact-form input,
-.visitor-contact-form textarea {
-
-
+.visitor-contact-form textarea{
     width:100%;
-
-
-    padding:14px;
-
-
-    border-radius:10px;
-
-
+    padding:12px;
+    margin-bottom:18px;
     border:1px solid #ccc;
-
-
-    outline:none;
-
-
-    font-size:15px;
-
-
+    border-radius:8px;
+    font-size:16px;
+    box-sizing:border-box;
 }
 
-
+.visitor-contact-form textarea{
+    resize:vertical;
+}
 
 .visitor-contact-form input:focus,
-.visitor-contact-form textarea:focus {
-
-
-    border-color:#0b5d3b;
-
-
+.visitor-contact-form textarea:focus{
+    border-color:#2f5d50;
+    outline:none;
 }
 
-
-
-.visitor-contact-form textarea {
-
-
-    resize:none;
-
-
-}
-
-
-
-
-
-/* ===============================
-   BUTTON
-================================ */
-
-
-.visitor-contact-form button {
-
-
-    width:220px;
-
-
-    margin:auto;
-
-
-    padding:13px;
-
-
-    border:none;
-
-
-    border-radius:30px;
-
-
-    background:#0b5d3b;
-
-
+.visitor-contact-form button{
+    background:#2f5d50;
     color:white;
-
-
-    font-size:17px;
-
-
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
     cursor:pointer;
-
-
-    transition:0.3s;
-
-
+    transition:.3s;
 }
 
-
-
-.visitor-contact-form button:hover {
-
-
-    background:#087548;
-
-
-    transform:scale(1.05);
-
-
+.visitor-contact-form button:hover{
+    background:#23463c;
 }
 
-
-
-
-
-/* ===============================
-   RESPONSIVE DESIGN
-================================ */
-
-
-@media(max-width:800px){
-
-
-
-    .visitor-contact-overlay {
-
-
-        padding:20px;
-
-
-    }
-
-
-
-    .visitor-contact-container {
-
-
-        margin-top:80px;
-
-
-        padding:20px;
-
-
-    }
-
-
-
-
-    .input-row {
-
-
-        flex-direction:column;
-
-
-    }
-
-
-
-
-    .visitor-contact-container h1 {
-
-
-        font-size:32px;
-
-
-    }
-
-
-
+.visitor-contact-info{
+    margin-top:35px;
+    text-align:center;
+    border-top:1px solid #ddd;
+    padding-top:25px;
 }
 
+.visitor-contact-info h3{
+    color:#1f4d3a;
+    margin-bottom:15px;
+}
 
+.visitor-contact-info p{
+    margin:8px 0;
+    color:#444;
+}
+
+@media(max-width:768px){
+
+    .visitor-contact-container{
+        width:100%;
+        padding:25px;
+    }
+
+    .visitor-contact-container h1{
+        font-size:30px;
+    }
+
+}

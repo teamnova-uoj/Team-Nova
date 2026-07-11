@@ -1,295 +1,39 @@
-/* ==========================
-   NAVBAR
-========================== */
-
-.navbar {
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 15px 60px;
-
-  background: rgba(0, 98, 65, 0.92);
-  backdrop-filter: blur(8px);
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 50px;
+background:black;
 }
 
-.logo {
-  font-size: 26px;
-  font-weight: bold;
-  color: #ffffff;
+
+.logo{
+font-size:22px;
+font-weight:bold;
+color:#1f4d3a;
 }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  list-style: none;
-  gap: 35px;
+.nav-links{
+display:flex;
+list-style:none;
+gap:40px;
+font-size:16px;
 }
 
-.nav-links li {
-  list-style: none;
+.nav-links li{
+cursor:pointer;
 }
 
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  font-size: 17px;
-  font-weight: 500;
-  transition: 0.3s;
+.register-btn{
+background:#d7e7dc;
+color:#1f4d3a;
+border:none;
+padding:10px 25px;
+border-radius:20px;
+font-weight:650;
+cursor:pointer;
 }
 
-.nav-links a:hover {
-  color: #bfe9d2;
-}
-
-/* ==========================
-   LOGIN BUTTON
-========================== */
-
-.login-nav-btn {
-  background: white;
-  color: #006241;
-  border: none;
-  border-radius: 30px;
-  padding: 10px 28px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.login-nav-btn:hover {
-  background: #d7efe2;
-  transform: translateY(-2px);
-}
-
-/* ==========================
-   POPUP OVERLAY
-========================== */
-
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  background: rgba(0, 0, 0, 0.55);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  z-index: 2000;
-}
-
-/* ==========================
-   LOGIN POPUP
-========================== */
-
-.login-popup {
-  width: 420px;
-  max-width: 90%;
-
-  background: white;
-  border-radius: 18px;
-
-  padding: 35px;
-
-  position: relative;
-
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-
-  animation: popupFade 0.3s ease;
-}
-
-@keyframes popupFade {
-  from {
-    opacity: 0;
-    transform: translateY(-30px) scale(0.95);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.login-popup h2 {
-  text-align: center;
-  color: #006241;
-  margin-bottom: 25px;
-  font-size: 30px;
-}
-
-/* ==========================
-   CLOSE BUTTON
-========================== */
-
-.close-btn {
-  position: absolute;
-  top: 15px;
-  right: 18px;
-
-  background: transparent;
-  border: none;
-
-  font-size: 30px;
-  color: #555;
-
-  cursor: pointer;
-}
-
-.close-btn:hover {
-  color: red;
-}
-
-/* ==========================
-   FORM
-========================== */
-
-.login-popup form {
-  display: flex;
-  flex-direction: column;
-}
-
-.login-popup label {
-  margin-top: 15px;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #333;
-}
-
-.login-popup input {
-  padding: 12px 15px;
-
-  border: 1px solid #cccccc;
-  border-radius: 8px;
-
-  font-size: 15px;
-
-  outline: none;
-
-  transition: 0.3s;
-}
-
-.login-popup input:focus {
-  border-color: #006241;
-  box-shadow: 0 0 5px rgba(0, 98, 65, 0.25);
-}
-
-/* ==========================
-   LOGIN BUTTON
-========================== */
-
-.popup-login-btn {
-  margin-top: 28px;
-
-  background: #006241;
-  color: white;
-
-  border: none;
-  border-radius: 30px;
-
-  padding: 13px;
-
-  font-size: 17px;
-  font-weight: bold;
-
-  cursor: pointer;
-
-  transition: 0.3s;
-}
-
-.popup-login-btn:hover {
-  background: #008657;
-}
-
-/* ==========================
-   EXTRA LINKS
-========================== */
-
-.forgot-password {
-  text-align: center;
-  margin-top: 18px;
-
-  color: #006241;
-  cursor: pointer;
-
-  font-size: 15px;
-}
-
-.forgot-password:hover {
-  text-decoration: underline;
-}
-
-.register-link {
-  margin-top: 25px;
-  text-align: center;
-  color: #555;
-}
-
-.register-link a {
-  margin-left: 6px;
-  color: #006241;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.register-link a:hover {
-  text-decoration: underline;
-}
-
-/* ==========================
-   RESPONSIVE
-========================== */
-
-@media (max-width: 900px) {
-
-  .navbar {
-    padding: 15px 25px;
-  }
-
-  .nav-links {
-    gap: 20px;
-  }
-
-  .logo {
-    font-size: 22px;
-  }
-
-  .login-nav-btn {
-    padding: 9px 20px;
-  }
-}
-
-@media (max-width: 700px) {
-
-  .navbar {
-    flex-direction: column;
-    gap: 15px;
-    padding: 20px;
-  }
-
-  .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-  }
-
-  .login-popup {
-    width: 95%;
-    padding: 25px;
-  }
-
-  .login-popup h2 {
-    font-size: 26px;
-  }
+.register-btn:hover{
+background:#c9dccf;
 }
