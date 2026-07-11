@@ -4,64 +4,185 @@ import mangrove from "../assests/mangrove.png";
 
 function VisitorAbout() {
   return (
-    <div className="about-page">
+    <div className="visitor-about-page">
 
-      {/* Home Page Navbar */}
+
+      {/* Navbar */}
       <Navbar />
 
-      {/* Background */}
-      <div
-        className="hero"
-        style={{ backgroundImage: `url(${mangrove})` }}
+
+
+      {/* Full Screen Background */}
+
+      <section
+        className="visitor-about-hero"
+        style={{
+          backgroundImage: `url(${mangrove})`
+        }}
       >
 
-        {/* About Content */}
-        <div
-          className="login-box"
-          style={{
-            width: "650px",
-            margin: "0 auto",
-            background: "rgba(255,255,255,0.88)"
-          }}
-        >
-          <h2>About Mangrove Guard</h2>
 
-          <p>
-            Mangrove Guard is an IoT-based environmental monitoring system
-            developed to protect and conserve mangrove ecosystems. The platform
-            collects real-time environmental data from sensor devices installed
-            in mangrove areas.
-          </p>
+        {/* Dark Overlay */}
 
-          <p><strong>Key parameters monitored include:</strong></p>
+        <div className="visitor-about-overlay">
 
-          <ul style={{ textAlign: "left", lineHeight: "1.8" }}>
-            <li>🌊 Water Level Monitoring</li>
-            <li>🌡 Temperature Monitoring</li>
-            <li>🧂 Salinity Monitoring</li>
-            <li>🔋 Device Battery Status</li>
-            <li>⚠ Real-Time Environmental Alerts</li>
-          </ul>
 
-          <p>
-            The collected data is displayed through an interactive dashboard,
-            allowing administrators, researchers, and conservation teams to
-            monitor environmental conditions, identify risks early, and make
-            informed decisions.
-          </p>
 
-          <p>
-            Our mission is to combine IoT technology with environmental
-            conservation to ensure healthier and more sustainable mangrove
-            ecosystems for future generations.
-          </p>
+          {/* Main Card */}
+
+          <div className="visitor-about-container">
+
+
+
+            {/* Mission */}
+
+            <div className="visitor-about-mission">
+
+              <h2>
+                🌍 Our Mission
+              </h2>
+
+              <p>
+                Protect mangrove ecosystems through real-time IoT monitoring
+                and smart environmental management.
+              </p>
+
+            </div>
+
+
+
+
+            {/* About */}
+
+            <h2 className="visitor-about-title">
+              🌿 About Mangrove Guard
+            </h2>
+
+
+
+            <p className="visitor-about-description">
+
+              Mangrove Guard is an IoT-based monitoring platform that collects
+              real-time environmental data from devices installed in mangrove
+              forests and provides instant updates through a web dashboard.
+
+            </p>
+
+
+
+
+
+            {/* Monitoring */}
+
+            <h3 className="visitor-monitor-title">
+              What We Monitor
+            </h3>
+
+
+
+            <div className="visitor-monitor-grid">
+
+
+              <div className="visitor-monitor-card">
+
+                <h4>
+                  🌊 Water Level
+                </h4>
+
+                <p>
+                  Tracks tidal water level changes.
+                </p>
+
+              </div>
+
+
+
+              <div className="visitor-monitor-card">
+
+                <h4>
+                  🧂 Salinity
+                </h4>
+
+                <p>
+                  Measures salt concentration.
+                </p>
+
+              </div>
+
+
+
+
+              <div className="visitor-monitor-card">
+
+                <h4>
+                  🌡 Temperature
+                </h4>
+
+                <p>
+                  Monitors water temperature.
+                </p>
+
+              </div>
+
+
+
+
+              <div className="visitor-monitor-card">
+
+                <h4>
+                  🔋 Device Status
+                </h4>
+
+                <p>
+                  Displays battery health.
+                </p>
+
+              </div>
+
+
+            </div>
+
+
+
+
+
+            {/* Why */}
+
+            <div className="visitor-about-why">
+
+
+              <h3>
+                Why Mangrove Guard?
+              </h3>
+
+
+
+              <p>
+
+                The platform enables researchers and conservation teams to
+                monitor multiple mangrove sites, detect environmental changes,
+                and make informed decisions using real-time sensor data.
+
+              </p>
+
+
+            </div>
+
+
+
+          </div>
+
 
         </div>
 
-      </div>
+
+      </section>
+
+
 
     </div>
   );
 }
+
 
 export default VisitorAbout;
