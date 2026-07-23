@@ -1,69 +1,39 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./UserDashboard.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import mangrove from "../assests/mangrove.png";
 import api from "../services/api";
-import { useAuth } from "../context/AuthContext";
 
 // How each sensor parameter should be labeled/scaled on the bar graph.
 // "max" is only used to size the bar width (based on the valid ranges
 // already enforced in server/models/SensorReading.js).
 const PARAM_META = {
-  pH: { label: "pH", unit: "", max: 14 },
   temperature: { label: "Temperature", unit: "°C", max: 40 },
   salinity: { label: "Salinity", unit: " ppt", max: 60 },
   dissolved_o2: { label: "Dissolved O₂", unit: " mg/L", max: 15 },
 };
 
 function UserDashboard() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
   const [sites, setSites] = useState([]);
-  const [devices, setDevices] = useState([]);
   const [latestReadings, setLatestReadings] = useState([]);
   const [alerts, setAlerts] = useState([]);
-  const [attentionCount, setAttentionCount] = useState(0);
   const [selectedSiteId, setSelectedSiteId] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
-
-  // Close the navbar profile dropdown on outside click
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
-
   useEffect(() => {
     const loadDashboard = async () => {
       try {
-        const [sitesRes, devicesRes, readingsRes, alertsRes, unreadRes] = await Promise.all([
+        const [sitesRes, readingsRes, alertsRes] = await Promise.all([
           api.get("/sites"),
-          api.get("/devices"),
           api.get("/readings/latest"),
           api.get("/alerts", { params: { limit: 5 } }),
-          api.get("/alerts/unread-count"),
         ]);
 
         const siteList = sitesRes.data.data || [];
         setSites(siteList);
-        setDevices(devicesRes.data.data || []);
         setLatestReadings(readingsRes.data.data || []);
         setAlerts(alertsRes.data.data || []);
-        setAttentionCount(unreadRes.data.count || 0);
 
         if (siteList.length > 0) {
           setSelectedSiteId(siteList[0]._id);
@@ -78,10 +48,10 @@ function UserDashboard() {
     loadDashboard();
   }, []);
 
-  // "Active Devices" = every device whose status is "active", straight
-  // from the devices collection — not just the ones that happen to have
-  // a reading yet, so newly-installed devices still count correctly.
-  const activeDeviceCount = devices.filter((d) => d.status === "active").length;
+  // "Active Devices" = devices that reported a reading and are marked active
+  const activeDeviceCount = latestReadings.filter(
+    (r) => r.device?.status === "active"
+  ).length;
 
   // Readings that belong to whichever site is selected in the dropdown
   const siteReadings = latestReadings.filter(
@@ -101,24 +71,7 @@ function UserDashboard() {
           <Link to="/alerts">Alerts</Link>
           <Link to="/about">About</Link>
           <Link to="/contact">Contact</Link>
-
-          <div className="profile-menu" ref={menuRef}>
-            <button
-              className="avatar-btn"
-              onClick={() => setMenuOpen((open) => !open)}
-            >
-              {user?.name ? user.name.charAt(0).toUpperCase() : "👤"}
-            </button>
-
-            {menuOpen && (
-              <div className="profile-dropdown">
-                <Link to="/profile" onClick={() => setMenuOpen(false)}>
-                  👤 Profile
-                </Link>
-                <button onClick={handleLogout}>🚪 Logout</button>
-              </div>
-            )}
-          </div>
+          <Link to="/profile">Profile</Link>
         </div>
       </div>
 
@@ -147,7 +100,7 @@ function UserDashboard() {
 
           <div className="card">
             <h3>Total Alerts</h3>
-            <h2>{loading ? "…" : attentionCount}</h2>
+            <h2>{loading ? "…" : alerts.length}</h2>
             <p>Alerts Requiring Attention</p>
           </div>
         </div>

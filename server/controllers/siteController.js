@@ -6,7 +6,7 @@ const Device = require('../models/Device');
 // @access  Private
 exports.getSites = async (req, res, next) => {
   try {
-    const sites = await Site.find().populate('createdBy', 'name email');
+    const sites = await Site.find();
     res.status(200).json({ success: true, count: sites.length, data: sites });
   } catch (error) {
     next(error);
@@ -18,7 +18,7 @@ exports.getSites = async (req, res, next) => {
 // @access  Private
 exports.getSite = async (req, res, next) => {
   try {
-    const site = await Site.findById(req.params.id).populate('createdBy', 'name email');
+    const site = await Site.findById(req.params.id);
 
     if (!site) {
         return res.status(404).json({

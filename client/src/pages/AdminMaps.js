@@ -1,417 +1,64 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import api from "../services/api";
+import { Link } from "react-router-dom";
 import "./AdminMaps.css";
+import mangrove from "../assests/mangrove.png";
 
 function AdminMaps() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  // Data
-  const [sites, setSites] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  // Modals
-  const [showAdd, setShowAdd]           = useState(false);
-  const [showEdit, setShowEdit]         = useState(false);
-  const [showThresh, setShowThresh]     = useState(false);
-  const [showDelete, setShowDelete]     = useState(false);
-  const [selected, setSelected]         = useState(null);
-
-  // Forms
-  const [form, setForm] = useState({ name: "", location: "", region: "Northern" });
-  const [thresh, setThresh] = useState({
-    pH:           { min: 6.5,  max: 8.5  },
-    temperature:  { min: 20,   max: 35   },
-    salinity:     { min: 0,    max: 45   },
-    dissolved_o2: { min: 4,    max: 15   },
-  });
-  const [saving, setSaving]     = useState(false);
-  const [formErr, setFormErr]   = useState("");
-
-  const [toast, setToast] = useState({ show: false, message: "", type: "success" });
-
-  
-  const showToast = (message, type = "success") => {
-    setToast({ show: true, message, type });
-    setTimeout(() => setToast({ show: false, message: "", type: "success" }), 3000);
-  };
-
-  // ── fetch ─────────────────────────────────────────────
-  const load = async () => {
-    setLoading(true);
-    setError("");
-    try {
-      const res = await api.get("/sites");
-      setSites(res.data.data || []);
-    } catch {
-      setError("Could not load sites. Check that the backend is running.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => { load(); }, []);
-
-  // ── counts ────────────────────────────────────────────
-  const byRegion = (r) => sites.filter(s => s.region === r).length;
-
-  // ── add ───────────────────────────────────────────────
-  const openAdd = () => {
-    setForm({ name: "", location: "", region: "Northern" });
-    setFormErr("");
-    setShowAdd(true);
-  };
-  const doAdd = async (e) => {
-    e.preventDefault();
-    if (!form.name.trim() || !form.location.trim()) { setFormErr("Name and location are required."); return; }
-    setSaving(true);
-    try   { await api.post("/sites", form); setShowAdd(false); load();
-      showToast("Site created successfully!");
-     }
-    catch (err) { setFormErr(err.response?.data?.message || "Failed to create site."); }
-    finally { setSaving(false); }
-  };
-
-  // ── edit ──────────────────────────────────────────────
-  const openEdit = (site) => {
-    setSelected(site);
-    setForm({ name: site.name, location: site.location, region: site.region });
-    setFormErr("");
-    setShowEdit(true);
-  };
-  const doEdit = async (e) => {
-    e.preventDefault();
-    if (!form.name.trim() || !form.location.trim()) { setFormErr("Name and location are required."); return; }
-    setSaving(true);
-    try   { await api.put(`/sites/${selected._id}`, form); setShowEdit(false); load(); 
-  showToast("Site updated successfully!");
-  }
-    catch (err) { setFormErr(err.response?.data?.message || "Failed to update site."); }
-    finally { setSaving(false); }
-  };
-
-  // ── thresholds ────────────────────────────────────────
-  const openThresh = (site) => {
-    setSelected(site);
-    setThresh({
-      pH:           { min: site.thresholds?.pH?.min ?? 6.5,          max: site.thresholds?.pH?.max ?? 8.5  },
-      temperature:  { min: site.thresholds?.temperature?.min ?? 20,   max: site.thresholds?.temperature?.max ?? 35 },
-      salinity:     { min: site.thresholds?.salinity?.min ?? 0,       max: site.thresholds?.salinity?.max ?? 45   },
-      dissolved_o2: { min: site.thresholds?.dissolved_o2?.min ?? 4,   max: site.thresholds?.dissolved_o2?.max ?? 15 },
-    });
-    setFormErr("");
-    setShowThresh(true);
-  };
-  const doThresh = async (e) => {
-    e.preventDefault();
-    setSaving(true);
-    try   { await api.put(`/sites/${selected._id}/thresholds`, thresh); setShowThresh(false); load();
-    showToast("Thresholds updated successfully!"); }
-    catch (err) { setFormErr(err.response?.data?.message || "Failed to update thresholds."); }
-    finally { setSaving(false); }
-  };
-  const setT = (param, bound, val) =>
-    setThresh(p => ({ ...p, [param]: { ...p[param], [bound]: parseFloat(val) || 0 } }));
-
-  // ── delete ────────────────────────────────────────────
-  const openDelete = (site) => { setSelected(site); setShowThresh(false); 
-  setShowEdit(false); setShowDelete(true); };
-  const doDelete = async () => {
-    setSaving(true);
-    try   { await api.delete(`/sites/${selected._id}`); setShowDelete(false); load(); 
-    showToast("Site deleted successfully.", "delete"); }
-    catch(err){
-       console.error(err);
-       setError("Failed to delete site."); }
-    finally { setSaving(false); }
-  };
-
-  // ── helpers ───────────────────────────────────────────
-  const fc = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-  const regionClass = (r) => ({ Northern:"rn", Southern:"rs", Eastern:"re", Western:"rw" }[r] || "rn");
-
-  const handleLogout = () => { logout(); navigate("/"); };
-
-  // ── render ────────────────────────────────────────────
   return (
-    <div className="am-page">
+    <div
+      className="admin-maps-page"
+      style={{ backgroundImage: `url(${mangrove})` }}
+    >
+      <div className="admin-maps-overlay">
 
-      {/* ── Sidebar ── */}
-      <aside className="am-sidebar">
-        <div className="am-brand">
-          <span className="am-brand-icon">🌿</span>
-          <div>
-            <div className="am-brand-name">MangroveGuard</div>
-            <div className="am-brand-role">Admin Panel</div>
+        {/* Navbar */}
+        <div className="admin-navbar">
+
+          <div className="logo">
+            🌿 MangroveGuard Admin
           </div>
+
+          <div className="nav-links">
+            <Link to="/admin-dashboard">Dashboard</Link>
+            <Link to="/manage-users">Users</Link>
+            <Link to="/manage-devices">Devices</Link>
+            <Link to="/admin-alerts">Alerts</Link>
+            <Link to="/admin-maps">Sites</Link>
+            <Link to="/admin-profile">Profile</Link>
+          </div>
+
         </div>
 
-        <nav className="am-nav">
-          {[
-            { to: "/admin-dashboard", icon: "⬛", label: "Dashboard" },
-            { to: "/manage-users",    icon: "👥", label: "Users"     },
-            { to: "/manage-devices",  icon: "📡", label: "Devices"   },
-            { to: "/admin-alerts",    icon: "🔔", label: "Alerts"    },
-            { to: "/admin-maps",      icon: "📍", label: "Sites", active: true },
-            { to: "/admin-profile",   icon: "👤", label: "Profile"   },
-          ].map(({ to, icon, label, active }) => (
-            <Link key={to} to={to} className={`am-nav-link ${active ? "am-nav-link--active" : ""}`}>
-              <span className="am-nav-icon">{icon}</span>
-              <span>{label}</span>
-            </Link>
-          ))}
-        </nav>
+        <h1 className="title">Mangrove Monitoring Sites</h1>
 
-        <div className="am-sidebar-bottom">
-          <div className="am-user-card">
-            <div className="am-user-avatar">{user?.name?.[0]?.toUpperCase() || "A"}</div>
-            <div>
-              <div className="am-user-name">{user?.name || "Admin"}</div>
-              <div className="am-user-email">{user?.email || ""}</div>
-            </div>
+        <div className="sites-grid">
+
+          <div className="site-card">
+            <h3>Site A</h3>
+            <p>Negombo Lagoon</p>
+            <p>Status: Active</p>
           </div>
-          <button className="am-logout-btn" onClick={handleLogout}>⏻ Logout</button>
-        </div>
-      </aside>
 
-      {/* ── Main ── */}
-      <main className="am-main">
-
-        {/* Header */}
-        <div className="am-header">
-          <div>
-            <p className="am-breadcrumb">Admin › Sites</p>
-            <h1 className="am-title">Monitoring Sites</h1>
-            <p className="am-subtitle">Manage lagoon monitoring locations and alert thresholds.</p>
+          <div className="site-card">
+            <h3>Site B</h3>
+            <p>Muthurajawela</p>
+            <p>Status: Active</p>
           </div>
-          <button className="am-btn-primary" onClick={openAdd}>＋ Add New Site</button>
+
+          <div className="site-card">
+            <h3>Site C</h3>
+            <p>Puttalam</p>
+            <p>Status: Maintenance</p>
+          </div>
+
+          <div className="site-card">
+            <h3>Site D</h3>
+            <p>Kalpitiya</p>
+            <p>Status: Active</p>
+          </div>
+
         </div>
 
-        {/* Stats */}
-        <div className="am-stats">
-          {[
-            { icon: "📍", val: sites.length,                     label: "Total Sites"       },
-            { icon: "🧭", val: byRegion("Northern"),             label: "Northern Province" },
-            { icon: "🌊", val: byRegion("Southern"),             label: "Southern Province" },
-            { icon: "🗺️", val: byRegion("Eastern")+byRegion("Western"), label: "East / West" },
-          ].map((s, i) => (
-            <div className="am-stat-card" key={i}>
-              <span className="am-stat-icon">{s.icon}</span>
-              <div>
-                <div className="am-stat-val">{s.val}</div>
-                <div className="am-stat-lbl">{s.label}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Error */}
-        {error && <div className="am-error">{error}</div>}
-
-        {/* Loading */}
-        {loading ? (
-          <div className="am-loading">
-            <div className="am-spinner" />
-            <p>Loading sites…</p>
-          </div>
-        ) : (
-
-          /* Table */
-          <div className="am-card">
-            <table className="am-table">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Site Name</th>
-                  <th>Location</th>
-                  <th>Region</th>
-                  <th>pH Range</th>
-                  <th>Temp Range</th>
-                  <th>Created By</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sites.length === 0 ? (
-                  <tr>
-                    <td colSpan="8" className="am-empty">
-                      No sites found. Click <strong>＋ Add New Site</strong> to get started.
-                    </td>
-                  </tr>
-                ) : sites.map((site, i) => (
-                  <tr key={site._id} className="am-tr">
-                    <td className="am-td-num">{i + 1}</td>
-                    <td className="am-td-name">{site.name}</td>
-                    <td className="am-td-loc">{site.location}</td>
-                    <td>
-                      <span className={`am-badge am-badge--${regionClass(site.region)}`}>{site.region}</span>
-                    </td>
-                    <td className="am-td-data">
-                      {site.thresholds?.pH ? `${site.thresholds.pH.min} – ${site.thresholds.pH.max}` : "—"}
-                    </td>
-                    <td className="am-td-data">
-                      {site.thresholds?.temperature
-                        ? `${site.thresholds.temperature.min}°C – ${site.thresholds.temperature.max}°C`
-                        : "—"}
-                    </td>
-                    <td className="am-td-dim">{site.createdBy?.name || "Admin"}</td>
-                    <td>
-                      <div className="am-actions">
-                        <button className="am-act am-act--edit"   onClick={() => openEdit(site)}>✏ Edit</button>
-                        <button className="am-act am-act--thresh" onClick={() => openThresh(site)}>🎛 Thresholds</button>
-                        <button className="am-act am-act--del"    onClick={() => openDelete(site)}>🗑 Delete</button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </main>
-
-      {/* ═══════ MODALS ═══════ */}
-
-      {/* Add */}
-      {showAdd && (
-        <div className="am-overlay" onClick={() => setShowAdd(false)}>
-          <div className="am-modal" onClick={e => e.stopPropagation()}>
-            <div className="am-modal-head">
-              <h2>Add New Site</h2>
-              <button className="am-close" onClick={() => setShowAdd(false)}>✕</button>
-            </div>
-            <form className="am-modal-body" onSubmit={doAdd}>
-              {formErr && <p className="am-ferr">{formErr}</p>}
-              <label className="am-lbl">Site Name</label>
-              <input className="am-inp" name="name" value={form.name} onChange={fc} placeholder="e.g. Negombo Lagoon Site" />
-              <label className="am-lbl">Location (Coordinates or Address)</label>
-              <input className="am-inp" name="location" value={form.location} onChange={fc} placeholder="e.g. 7.2081° N, 79.8461° E" />
-              <label className="am-lbl">Region</label>
-              <select className="am-inp" name="region" value={form.region} onChange={fc}>
-                <option>Northern</option><option>Southern</option><option>Eastern</option><option>Western</option>
-              </select>
-              <div className="am-modal-foot">
-                <button type="button" className="am-btn-sec" onClick={() => setShowAdd(false)}>Cancel</button>
-                <button type="submit" className="am-btn-primary" disabled={saving}>{saving ? "Saving…" : "Create Site"}</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Edit */}
-      {showEdit && (
-        <div className="am-overlay" onClick={() => setShowEdit(false)}>
-          <div className="am-modal" onClick={e => e.stopPropagation()}>
-            <div className="am-modal-head">
-              <h2>Edit Site</h2>
-              <button className="am-close" onClick={() => setShowEdit(false)}>✕</button>
-            </div>
-            <form className="am-modal-body" onSubmit={doEdit}>
-              {formErr && <p className="am-ferr">{formErr}</p>}
-              <label className="am-lbl">Site Name</label>
-              <input className="am-inp" name="name" value={form.name} onChange={fc} />
-              <label className="am-lbl">Location</label>
-              <input className="am-inp" name="location" value={form.location} onChange={fc} />
-              <label className="am-lbl">Region</label>
-              <select className="am-inp" name="region" value={form.region} onChange={fc}>
-                <option>Northern</option><option>Southern</option><option>Eastern</option><option>Western</option>
-              </select>
-              <div className="am-modal-foot">
-                <button type="button" className="am-btn-sec" onClick={() => setShowEdit(false)}>Cancel</button>
-                <button type="submit" className="am-btn-primary" disabled={saving}>{saving ? "Saving…" : "Save Changes"}</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Thresholds */}
-      {showThresh && (
-        <div className="am-overlay" onClick={() => setShowThresh(false)}>
-          <div className="am-modal am-modal--wide" onClick={e => e.stopPropagation()}>
-            <div className="am-modal-head">
-              <h2>Alert Thresholds</h2>
-              <button className="am-close" onClick={() => setShowThresh(false)}>✕</button>
-            </div>
-            <p className="am-modal-hint">Site: <strong>{selected?.name}</strong> — readings outside these values will trigger alerts.</p>
-            <form className="am-modal-body" onSubmit={doThresh}>
-              {formErr && <p className="am-ferr">{formErr}</p>}
-              {[
-                { key: "pH",           label: "pH Level",     unit: ""      },
-                { key: "temperature",  label: "Temperature",  unit: "°C"    },
-                { key: "salinity",     label: "Salinity",     unit: "ppt"   },
-                { key: "dissolved_o2", label: "Dissolved O₂", unit: "mg/L"  },
-              ].map(({ key, label, unit }) => (
-                <div className="am-trow" key={key}>
-                  <span className="am-tlbl">{label} {unit && <small>({unit})</small>}</span>
-                  <div className="am-tinputs">
-                    <div className="am-tfield">
-                      <label>Min</label>
-                      <input type="number" step="0.1" className="am-inp am-inp--sm"
-                        value={thresh[key].min} onChange={e => setT(key, "min", e.target.value)} />
-                    </div>
-                    <span className="am-tdash">—</span>
-                    <div className="am-tfield">
-                      <label>Max</label>
-                      <input type="number" step="0.1" className="am-inp am-inp--sm"
-                        value={thresh[key].max} onChange={e => setT(key, "max", e.target.value)} />
-                    </div>
-                  </div>
-                </div>
-          ))}
-              <div className="am-modal-foot">
-                <button type="button" className="am-btn-sec" onClick={() => setShowThresh(false)}>Cancel</button>
-                <button type="submit" className="am-btn-primary" disabled={saving}>{saving ? "Saving…" : "Save Thresholds"}</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Delete */}
-              {showDelete && (
-                <div className="am-overlay" onClick={() => setShowDelete(false)}>
-                  <div className="am-modal" onClick={e => e.stopPropagation()}>
-                    <div className="am-modal-head">
-                      <h2>Confirm Delete</h2>
-                      <button className="am-close" onClick={() => setShowDelete(false)}>✕</button>
-                    </div>
-
-                    <div className="am-modal-body">
-                      <p>Are you sure you want to delete <strong>{selected?.name}</strong>?</p>
-
-                      <div className="am-modal-foot">
-                        <button 
-                          type="button"className="am-btn-sec" onClick={() => setShowDelete(false)}>
-                          Cancel
-                        </button>
-                        <button 
-                          type="button"
-                          className="am-btn-danger" 
-                          onClick={doDelete} 
-                          disabled={saving}
-                        >
-                          {saving ? "Deleting…" : "Delete"}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-      {toast.show && (
-        <div className={`am-toast am-toast--${toast.type}`}>
-          <span className="am-toast-icon">
-            {toast.type === "delete" ? "🗑️" : "✅"}
-          </span>
-          {toast.message}
-        </div>
-      )} 
-
+      </div>
     </div>
   );
 }

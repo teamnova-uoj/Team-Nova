@@ -114,13 +114,15 @@ body{
 
     width:90%;
 
-    max-width:420px;
+    max-width:1200px;
 
     margin:auto;
 
     display:flex;
 
-    justify-content:center;
+    gap:35px;
+
+    align-items:flex-start;
 
 }
 
@@ -130,13 +132,13 @@ body{
 
 .profile-card{
 
-    width:100%;
+    width:360px;
 
     background:white;
 
     border-radius:15px;
 
-    padding:35px;
+    padding:30px;
 
     box-shadow:0 8px 25px rgba(0,0,0,.25);
 
@@ -274,223 +276,127 @@ body{
 }
 
 /* ==========================================================
-   INLINE FIELD EDITING (pencil icon)
+   EDIT PROFILE CARD
 ========================================================== */
 
-.value-inline{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
+.edit-card{
 
-.pencil-btn{
-    background:none;
-    border:none;
-    cursor:pointer;
-    font-size:14px;
-    color:#888;
-    padding:2px 4px;
-    border-radius:4px;
-    transition:.2s;
-}
-
-.pencil-btn:hover{
-    color:#1f4d3a;
-    background:#eef5f0;
-}
-
-.edit-inline{
-    display:flex;
-    align-items:center;
-    gap:8px;
     flex:1;
-    justify-content:flex-end;
-    flex-wrap:wrap;
-}
 
-.edit-inline input{
-    padding:8px 10px;
-    border:1px solid #ccc;
-    border-radius:6px;
-    font-size:14px;
-    max-width:180px;
-}
-
-.edit-inline input:focus{
-    outline:none;
-    border-color:#1f4d3a;
-    box-shadow:0 0 5px rgba(31,77,58,.3);
-}
-
-.save-btn, .cancel-btn{
-    border:none;
-    width:28px;
-    height:28px;
-    border-radius:50%;
-    cursor:pointer;
-    font-weight:bold;
-    transition:.2s;
-}
-
-.save-btn{
-    background:#1f4d3a;
-    color:white;
-}
-
-.save-btn:hover{
-    background:#2d6a4f;
-}
-
-.cancel-btn{
-    background:#eee;
-    color:#555;
-}
-
-.cancel-btn:hover{
-    background:#ddd;
-}
-
-.password-row{
-    align-items:flex-start;
-}
-
-.password-edit{
-    flex-direction:column;
-    align-items:stretch;
-    width:100%;
-}
-
-.password-edit input{
-    max-width:100%;
-    width:100%;
-    margin-bottom:8px;
-}
-
-.password-edit-actions{
-    display:flex;
-    gap:10px;
-    justify-content:flex-end;
-}
-
-.password-edit-actions .save-btn,
-.password-edit-actions .cancel-btn{
-    width:auto;
-    border-radius:6px;
-    padding:8px 16px;
-}
-
-.field-error{
-    background:#fdecea;
-    color:#b3261e;
-    padding:8px 12px;
-    border-radius:6px;
-    font-size:13px;
-    margin-bottom:15px;
-    text-align:center;
-}
-
-/* ==========================================================
-   LOGOUT BUTTON
-========================================================== */
-
-.logout-btn{
-    width:100%;
-    margin-top:25px;
-    padding:13px;
-    background:#c0392b;
-    color:white;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
-    font-size:15px;
-    font-weight:bold;
-    transition:.3s;
-}
-
-.logout-btn:hover{
-    background:#a5311f;
-}
-
-/* ==========================================================
-   NAVBAR PROFILE AVATAR + DROPDOWN
-========================================================== */
-
-.profile-menu{
-    position:relative;
-}
-
-.avatar-btn{
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    border:2px solid white;
-    background:#2d6a4f;
-    color:white;
-    font-size:16px;
-    font-weight:bold;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    overflow:hidden;
-    padding:0;
-    transition:.2s;
-}
-
-.avatar-btn:hover{
-    border-color:#b7ff7a;
-}
-
-.avatar-btn img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-.profile-dropdown{
-    position:absolute;
-    top:48px;
-    right:0;
     background:white;
-    border-radius:10px;
-    box-shadow:0 8px 20px rgba(0,0,0,.25);
-    overflow:hidden;
-    min-width:150px;
-    z-index:20;
-    display:flex;
-    flex-direction:column;
+
+    border-radius:15px;
+
+    padding:35px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.25);
+
 }
 
-.profile-dropdown a,
-.profile-dropdown button{
-    display:block;
-    width:100%;
-    text-align:left;
-    padding:12px 16px;
-    background:white;
-    border:none;
-    color:#333;
-    font-size:14px;
-    text-decoration:none;
-    cursor:pointer;
-    transition:.2s;
-    font-family:inherit;
-}
+.edit-card h2{
 
-.profile-dropdown a:hover,
-.profile-dropdown button:hover{
-    background:#eef5f0;
     color:#1f4d3a;
+
+    margin-bottom:25px;
+
 }
 
-.profile-dropdown button{
-    color:#c0392b;
-    border-top:1px solid #eee;
+.edit-card label{
+
+    display:block;
+
+    margin-top:18px;
+
+    margin-bottom:8px;
+
+    color:#333;
+
+    font-weight:bold;
+
 }
 
-.profile-dropdown button:hover{
-    background:#fdecea;
-    color:#a5311f;
+.edit-card input{
+
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid #ccc;
+
+    border-radius:6px;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.edit-card select{
+
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid #ccc;
+
+    border-radius:6px;
+
+    font-size:15px;
+
+    transition:.3s;
+
+    background:white;
+
+}
+
+.edit-card select:focus{
+
+    outline:none;
+
+    border-color:#1f4d3a;
+
+    box-shadow:0 0 5px rgba(31,77,58,.3);
+
+}
+
+.edit-card input:focus{
+
+    outline:none;
+
+    border-color:#1f4d3a;
+
+    box-shadow:0 0 5px rgba(31,77,58,.3);
+
+}
+
+.edit-card button{
+
+    width:100%;
+
+    margin-top:30px;
+
+    padding:13px;
+
+    background:#1f4d3a;
+
+    color:white;
+
+    border:none;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+.edit-card button:hover{
+
+    background:#2d6a4f;
+
 }
 
 /* ==========================================================
@@ -542,6 +448,12 @@ body{
 @media(max-width:600px){
 
     .profile-card{
+
+        padding:20px;
+
+    }
+
+    .edit-card{
 
         padding:20px;
 

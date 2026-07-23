@@ -1,32 +1,10 @@
 import "./home.css";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import mangrove from "../assests/mangrove.png";
-import { useAuth } from "../context/AuthContext";
 
 function About() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
-
   return (
-    <div className="visitor-about-page">
+    <div className="about-page">
 
       {/* Navbar */}
       <div className="dashboard-navbar">
@@ -38,103 +16,52 @@ function About() {
           <Link to="/alerts">Alerts</Link>
           <Link to="/about">About</Link>
           <Link to="/contact">Contact</Link>
-
-          <div className="profile-menu" ref={menuRef}>
-            <button
-              className="avatar-btn"
-              onClick={() => setMenuOpen((open) => !open)}
-            >
-              {user?.name ? user.name.charAt(0).toUpperCase() : "👤"}
-            </button>
-
-            {menuOpen && (
-              <div className="profile-dropdown">
-                <Link to="/profile" onClick={() => setMenuOpen(false)}>
-                  👤 Profile
-                </Link>
-                <button onClick={handleLogout}>🚪 Logout</button>
-              </div>
-            )}
-          </div>
+          <Link to="/profile">Profile</Link>
         </div>
       </div>
 
-      {/* Full Screen Background */}
-      <section
-        className="visitor-about-hero"
+      {/* Background Section */}
+      <div
+        className="hero"
         style={{ backgroundImage: `url(${mangrove})` }}
       >
+        {/* About Content Box */}
+        <div className="login-box" style={{ width: "500px" }}>
+          <h2>About Mangrove Guard</h2>
 
-        {/* Dark Overlay */}
-        <div className="visitor-about-overlay">
+          <p>
+            Mangrove Guard is an IoT-based environmental monitoring system
+            developed to protect and conserve mangrove ecosystems. The
+            platform gathers real-time data from sensors deployed in
+            mangrove areas.
+          </p>
 
-          {/* Main Card */}
-          <div className="visitor-about-container">
+          <p>
+            Key parameters monitored include:
+          </p>
 
-            {/* Mission */}
-            <div className="visitor-about-mission">
-              <h2>🌍 Our Mission</h2>
-              <p>
-                Protect mangrove ecosystems through real-time IoT monitoring
-                and smart environmental management.
-              </p>
-            </div>
+          <ul style={{ textAlign: "left" }}>
+            <li>🌊 Water Level Monitoring</li>
+            <li>🌡 Temperature Monitoring</li>
+            <li>🧂 Salinity Monitoring</li>
+            <li>🔋 Device Battery Status</li>
+            <li>⚠ Real-Time Environmental Alerts</li>
+          </ul>
 
-            {/* About */}
-            <h2 className="visitor-about-title">
-              🌿 About Mangrove Guard
-            </h2>
+          <p>
+            The collected data is displayed through an interactive dashboard,
+            allowing administrators and researchers to track environmental
+            conditions, identify risks early, and support mangrove
+            conservation efforts.
+          </p>
 
-            <p className="visitor-about-description">
-              Mangrove Guard is an IoT-based monitoring platform that collects
-              real-time environmental data from devices installed in mangrove
-              forests and provides instant updates through a web dashboard.
-            </p>
-
-            {/* Monitoring */}
-            <h3 className="visitor-monitor-title">
-              What We Monitor
-            </h3>
-
-            <div className="visitor-monitor-grid">
-
-              <div className="visitor-monitor-card">
-                <h4>🌊 Water Level</h4>
-                <p>Tracks tidal water level changes.</p>
-              </div>
-
-              <div className="visitor-monitor-card">
-                <h4>🧂 Salinity</h4>
-                <p>Measures salt concentration.</p>
-              </div>
-
-              <div className="visitor-monitor-card">
-                <h4>🌡 Temperature</h4>
-                <p>Monitors water temperature.</p>
-              </div>
-
-              <div className="visitor-monitor-card">
-                <h4>🔋 Device Status</h4>
-                <p>Displays battery health.</p>
-              </div>
-
-            </div>
-
-            {/* Why */}
-            <div className="visitor-about-why">
-              <h3>Why Mangrove Guard?</h3>
-              <p>
-                The platform enables researchers and conservation teams to
-                monitor multiple mangrove sites, detect environmental changes,
-                and make informed decisions using real-time sensor data.
-              </p>
-            </div>
-
-          </div>
-
+          <p>
+            Our mission is to combine IoT technology and environmental
+            protection to ensure healthier and more sustainable mangrove
+            ecosystems for future generations.
+          </p>
         </div>
-
-      </section>
+      </div>
 
     </div>
   );
