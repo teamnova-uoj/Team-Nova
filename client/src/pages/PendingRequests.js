@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AdminSidebar from '../components/AdminSidebar';
+import Footer from '../components/Footer';
 import api from '../services/api';
 import './PendingRequests.css';
 
@@ -245,6 +246,7 @@ function PendingRequests() {
             </div>
           )}
         </div>
+        <Footer />
       </div>
     </div>
   );

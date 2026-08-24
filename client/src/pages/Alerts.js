@@ -3,6 +3,7 @@ import "./Alerts.css";
 import mangrove from "../assests/mangrove.png";
 import api from "../services/api";
 import UserNavbar from "../components/UserNavbar";
+import Footer from "../components/Footer";
 
 const STATUS_LABEL = {
   unread: "Pending",
@@ -125,6 +126,7 @@ function Alerts() {
 
       </div>
 
+      <Footer />
     </div>
   );
 }

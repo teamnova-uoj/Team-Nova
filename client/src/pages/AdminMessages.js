@@ -5,6 +5,7 @@ import api from "../services/api";
 import "./AdminMessages.css";
 
 import AdminSidebar from "../components/AdminSidebar";
+import Footer from "../components/Footer";
 
 function AdminMessages() {
   const { user } = useAuth();
@@ -172,6 +173,7 @@ function AdminMessages() {
             </table>
           </div>
         )}
+        <Footer />
       </main>
 
       {/* ── Full Message Modal ── */}

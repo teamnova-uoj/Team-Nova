@@ -3,6 +3,7 @@ import "./Contact.css";
 import mangrove from "../assests/mangrove.png";
 import axios from "axios";
 import UserNavbar from "../components/UserNavbar";
+import Footer from "../components/Footer";
 
 const navClass = ({ isActive }) => (isActive ? "active" : "");
 
@@ -147,6 +148,7 @@ function Contact() {
 
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

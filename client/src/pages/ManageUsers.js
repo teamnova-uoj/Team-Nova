@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import AdminSidebar from "../components/AdminSidebar";
+import Footer from "../components/Footer";
 import api from "../services/api";
 import "./ManageUsers.css";
 
@@ -301,6 +302,7 @@ function ManageUsers() {
             </table>
           </div>
         )}
+        <Footer />
       </main>
 
       {/* ═══════ MODALS ═══════ */}

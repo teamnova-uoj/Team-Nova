@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import AdminSidebar from '../components/AdminSidebar';
+import Footer from '../components/Footer';
 import './ManageSensors.css';
 
 function ManageSensors() {
@@ -291,6 +292,7 @@ function ManageSensors() {
             )}
           </div>
         </div>
+        <Footer />
       </main>
     </div>
   );

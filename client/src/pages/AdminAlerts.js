@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
 import "./AdminAlerts.css";
 import AdminSidebar from "../components/AdminSidebar";
+import Footer from "../components/Footer";
 
 function AdminAlerts() {
   const { user, logout } = useAuth();
@@ -385,6 +386,7 @@ function AdminAlerts() {
             </table>
           </div>
         )}
+        <Footer />
       </main>
 
       {/* Detail / Status Modal */}

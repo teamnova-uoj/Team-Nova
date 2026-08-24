@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import AdminSidebar from "../components/AdminSidebar";
+import Footer from "../components/Footer";
 import api from "../services/api";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer } from "recharts";
 import "./AdminAlerts.css";
@@ -395,6 +396,7 @@ function AdminDashboard() {
             </div>
           </>
         )}
+        <Footer />
       </main>
     </div>
   );

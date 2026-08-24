@@ -1,5 +1,6 @@
 import "./SiteDetails.css";
 import { Link } from "react-router-dom";
+import Footer from "../components/Footer";
 
 function NegomboLagoon() {
 
@@ -70,6 +71,7 @@ loading="lazy">
 
 </div>
 
+<Footer />
 </div>
 
 )

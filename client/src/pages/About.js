@@ -1,6 +1,7 @@
 import "./home.css";
 import mangrove from "../assests/mangrove.png";
 import UserNavbar from "../components/UserNavbar";
+import Footer from "../components/Footer";
 
 function About() {
   return (
@@ -86,6 +87,7 @@ function About() {
 
       </section>
 
+      <Footer />
     </div>
   );
 }

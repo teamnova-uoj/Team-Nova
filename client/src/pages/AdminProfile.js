@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./AdminProfile.css";
 import { useAuth } from "../context/AuthContext";
+import AdminSidebar from "../components/AdminSidebar";
+import Footer from "../components/Footer";
 import api from "../services/api";
 
 function AdminProfile() {
@@ -301,6 +303,7 @@ function AdminProfile() {
           </div>
         </div>
 
+        <Footer />
       </main>
     </div>
   );

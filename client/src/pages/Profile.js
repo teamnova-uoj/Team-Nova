@@ -5,6 +5,7 @@ import mangrove from "../assests/mangrove.png";
 import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
 import UserNavbar from "../components/UserNavbar";
+import Footer from "../components/Footer";
 
 function Profile() {
   const { user, logout } = useAuth();
@@ -239,6 +240,7 @@ function Profile() {
         </div>
 
       </div>
+      <Footer />
     </div>
   );
 }

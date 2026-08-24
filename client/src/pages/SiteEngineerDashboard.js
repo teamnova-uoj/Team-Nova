@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import AdminSidebar from '../components/AdminSidebar';
+import Footer from '../components/Footer';
 import './AdminAlerts.css';
 
 function SiteEngineerDashboard() {
@@ -316,6 +317,7 @@ function SiteEngineerDashboard() {
             </div>
           </>
         )}
+        <Footer />
       </main>
     </div>
   );
