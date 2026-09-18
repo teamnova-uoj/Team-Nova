@@ -25,6 +25,19 @@ const alertSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  threshold_breached: {
+    type: String,
+    enum: ['min', 'max'],
+    required: true
+  },
+  threshold_value: {
+    type: Number,
+    required: true
+  },
+  recipients: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   status: {
     type: String,
     enum: ['unread', 'read', 'resolved'],

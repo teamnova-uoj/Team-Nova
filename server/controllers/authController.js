@@ -151,6 +151,13 @@ exports.forgotPassword = async (req, res, next) => {
       await user.save({ validateBeforeSave: false });
 
       console.error('Error sending reset email:', emailError);
+      if (emailError.code === 'EPROTOCOL' || emailError.code === 'ETIMEDOUT' || emailError.code === 'ECONNECTION') {
+        console.error(
+          'Hint: this looks like a network/firewall issue, not bad credentials — ' +
+          'the server could not even reach the SMTP host. Check your firewall/antivirus, ' +
+          'try EMAIL_PORT=465, or switch to RESEND_API_KEY in .env (uses HTTPS, rarely blocked).'
+        );
+      }
       return res.status(500).json({ success: false, message: 'Email could not be sent' });
     }
   } catch (error) {

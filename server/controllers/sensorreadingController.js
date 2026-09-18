@@ -1,7 +1,9 @@
+const mongoose = require('mongoose');
 const SensorReading = require('../models/SensorReading');
 const Device = require('../models/Device');
 const Alert = require('../models/Alert');
 const User = require('../models/User');
+const { sendAlertSMS } = require('../services/smsservice');
 
 // Helper: check reading against site thresholds and generate alerts
 const generateAlerts = async (reading, device, site, io) => {
@@ -56,10 +58,10 @@ const generateAlerts = async (reading, device, site, io) => {
       parameter_name: param,
       severity_level: severity,
       measured_value: value,
-    //   threshold_breached: breached,
-    //   threshold_value: thresholdValue,
+      threshold_breached: breached,
+      threshold_value: thresholdValue,
       message,
-    //   recipients: recipientIds,
+      recipients: recipientIds,
       status: 'unread'
     });
 
@@ -68,6 +70,16 @@ const generateAlerts = async (reading, device, site, io) => {
     // Emit real-time alert via Socket.io if available
     if (io) {
       io.emit('new_alert', alert);
+    }
+
+    // Send SMS notification (logs + skips gracefully if no provider configured)
+    const smsResult = await sendAlertSMS(message);
+    if (smsResult.success) {
+      console.log(`SMS notification sent for ${paramLabel} alert.`);
+    } else if (smsResult.skipped) {
+      console.log(`SMS skipped for ${paramLabel} alert.`);
+    } else {
+      console.error(`SMS failed for ${paramLabel} alert.`);
     }
   }
 
