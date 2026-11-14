@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: webapps-mangrove-guard
+  labels:
+    name: webapps-mangrove-guard
+    app: mangrove-guard

@@ -11,7 +11,7 @@ function Footer() {
       navigator.share({
         title: 'MangroveGuard',
         text: 'Safeguarding Sri Lanka\'s coastal mangrove ecosystems through continuous IoT water chemistry telemetry.',
-        url: window.location.origin
+        url: `${window.location.origin}${process.env.PUBLIC_URL}/`
       }).catch(console.error);
     } else {
       alert("Sharing is not supported on this browser.");

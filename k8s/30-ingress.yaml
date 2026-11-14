@@ -1,0 +1,73 @@
+# Same pattern as the other webapps (e.g. webapps-counseling-nexus-nova/.k8s):
+#   https://www.webapps.jfn.ac.lk/mangrove-guard/      -> client (prefix stripped)
+#   https://www.webapps.jfn.ac.lk/mangrove-guard/api/  -> server (rewritten to /api/)
+#
+# The web ingress also rewrites (unlike counseling's plain Prefix) because the
+# client image's nginx serves the build from "/"; only the asset URLs inside the
+# bundle carry the /mangrove-guard prefix (PUBLIC_URL at build time).
+#
+# The API rewrite keeps the /api prefix because the Express routes and
+# Socket.io (/api/socket.io) are mounted under /api.
+#
+# TLS uses the shared letsencrypt-webapps ClusterIssuer. TLS secrets are
+# namespaced, so cert-manager keeps its own copy of the www.webapps.jfn.ac.lk
+# certificate in this namespace.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webapps-mangrove-guard-api-ingress
+  namespace: webapps-mangrove-guard
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /api/$2
+    cert-manager.io/cluster-issuer: letsencrypt-webapps
+    nginx.ingress.kubernetes.io/proxy-body-size: 2m
+    # Keep idle Socket.io websockets open (default is 60s).
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - www.webapps.jfn.ac.lk
+      secretName: letsencrypt-webapps
+  rules:
+    - host: www.webapps.jfn.ac.lk
+      http:
+        paths:
+          - path: /mangrove-guard/api(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: mangrove-guard-server
+                port:
+                  number: 5000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webapps-mangrove-guard-portal-ingress
+  namespace: webapps-mangrove-guard
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    cert-manager.io/cluster-issuer: letsencrypt-webapps
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - www.webapps.jfn.ac.lk
+      secretName: letsencrypt-webapps
+  rules:
+    - host: www.webapps.jfn.ac.lk
+      http:
+        paths:
+          - path: /mangrove-guard(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: mangrove-guard-client
+                port:
+                  number: 80

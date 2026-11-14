@@ -1,11 +1,13 @@
 import { io } from 'socket.io-client';
 import api from './api';
 
-// Derive Socket.io base URL from existing API service configuration
-const apiBaseURL = process.env.REACT_APP_SOCKET_URL || api.defaults.baseURL || 'http://localhost:5000/api';
-const socketURL = apiBaseURL.replace(/\/api\/?$/, '');
+// Socket.io is served under the API prefix (<api>/socket.io), so it follows the
+// API wherever it is mounted: http://localhost:5000/api in dev, /api behind the
+// compose nginx, /mangrove-guard/api behind the k8s ingress.
+const apiURL = new URL(api.defaults.baseURL, window.location.origin);
 
-const socket = io(socketURL, {
+const socket = io(apiURL.origin, {
+  path: `${apiURL.pathname.replace(/\/$/, '')}/socket.io`,
   autoConnect: true,
 });
 

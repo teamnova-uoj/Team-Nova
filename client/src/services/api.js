@@ -23,7 +23,7 @@ api.interceptors.response.use(
       if (token) {
         localStorage.removeItem('mg_token');
         localStorage.removeItem('mg_user');
-        window.location.href = '/';
+        window.location.href = `${process.env.PUBLIC_URL}/`;
       }
     }
     return Promise.reject(error);

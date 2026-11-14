@@ -35,7 +35,7 @@ import MyRequests from "./pages/MyRequests";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <AuthProvider>
         <Routes>
 

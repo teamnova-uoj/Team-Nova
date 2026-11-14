@@ -68,13 +68,19 @@ const ingestLimiter = createRateLimiter(60 * 1000, 300, 'Ingest rate limit excee
 app.use('/api/auth/login', authLimiter);
 app.use('/api/readings', ingestLimiter);
 
-// Socket.io setup
+// CLIENT_URL may carry a path (https://host/mangrove-guard); CORS compares
+// against the browser's Origin header, which never does.
+const allowedOrigins = ['http://localhost:3000', process.env.CLIENT_URL]
+  .filter(Boolean)
+  .map((url) => {
+    try { return new URL(url).origin; } catch { return url; }
+  });
+
+// Socket.io setup. Served under /api so it shares the API's proxy/ingress route.
 const io = new Server(server, {
+  path: '/api/socket.io',
   cors: {
-    origin: [
-      'http://localhost:3000',
-      process.env.CLIENT_URL
-    ].filter(Boolean),
+    origin: allowedOrigins,
     methods: ['GET', 'POST'],
     credentials: true
   }
@@ -103,10 +109,7 @@ io.on('connection', (socket) => {
 
 // Core middleware
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    process.env.CLIENT_URL
-  ].filter(Boolean),
+  origin: allowedOrigins,
   credentials: true
 }));
 app.use(express.json());

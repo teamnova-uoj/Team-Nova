@@ -1,0 +1,31 @@
+# Non-secret server settings. Loaded into the server pod with envFrom.
+# Secrets (MONGO_URI, JWT_SECRET, EMAIL_USER, EMAIL_PASS) live in
+# mangrove-guard-secret - see secret.example.yaml.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mangrove-guard-config
+  namespace: webapps-mangrove-guard
+data:
+  NODE_ENV: "production"
+  PORT: "5000"
+  HOST: "0.0.0.0"
+
+  # Public URL of the web app, including the sub-path. Used for CORS and for
+  # the links in approval / password-reset emails.
+  CLIENT_URL: "https://www.webapps.jfn.ac.lk/mangrove-guard"
+
+  JWT_EXPIRE: "7d"
+
+  # Email. Sending is enabled only when EMAIL_USER and EMAIL_PASS (secret) are
+  # set AND one of EMAIL_SERVICE / EMAIL_HOST is set; otherwise emails are only
+  # logged to stdout. Use EMAIL_SERVICE (e.g. "gmail") OR EMAIL_HOST/PORT.
+  # Port 465 = implicit TLS, 587 = STARTTLS.
+  EMAIL_SERVICE: ""
+  EMAIL_HOST: ""
+  EMAIL_PORT: "587"
+  EMAIL_FROM: ""
+  EMAIL_COOLDOWN_MINUTES: "30"
+
+  SMS_COOLDOWN_MINUTES: "30"
+  # WATCHDOG_CHECK_INTERVAL_MS: "60000"

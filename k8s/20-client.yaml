@@ -1,0 +1,76 @@
+# Frontend: the React build served by nginx (nginx-unprivileged, port 8080).
+# The ingress sends /mangrove-guard/api straight to the server, so nginx here
+# only serves static files. API_UPSTREAM is still set because the image's nginx
+# config proxies /api and nginx refuses to start if that host is unresolvable.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mangrove-guard-client
+  namespace: webapps-mangrove-guard
+  labels:
+    app: mangrove-guard-client
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: mangrove-guard-client
+  template:
+    metadata:
+      labels:
+        app: mangrove-guard-client
+    spec:
+      imagePullSecrets:
+        - name: github-secret
+      containers:
+        - name: client
+          image: ghcr.io/uoj-lk/mangroveguard/client:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: API_UPSTREAM
+              value: "mangrove-guard-server:5000"
+          # nginx serving a static build uses single-digit MiB.
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "16Mi"
+            limits:
+              cpu: "100m"
+              memory: "64Mi"
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mangrove-guard-client
+  namespace: webapps-mangrove-guard
+spec:
+  selector:
+    app: mangrove-guard-client
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

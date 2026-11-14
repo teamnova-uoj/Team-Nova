@@ -76,7 +76,7 @@ function ForgotPassword() {
           {devResetUrl && (
             <div className="dev-reset-box">
               <p><strong>Dev mode</strong> — no email service is configured yet, so here's the link directly:</p>
-              <Link to={devResetUrl.replace(window.location.origin, "")}>
+              <Link to={devResetUrl.replace(window.location.origin + process.env.PUBLIC_URL, "")}>
                 {devResetUrl}
               </Link>
             </div>

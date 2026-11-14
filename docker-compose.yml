@@ -1,0 +1,51 @@
+# Local / single-host stack: MongoDB + API + web (nginx).
+#   cp .env.example .env   # then edit secrets
+#   docker compose up -d --build
+#   open http://localhost:8080
+name: team-nova
+
+services:
+  mongo:
+    image: mongo:8.0
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  server:
+    build:
+      context: .
+      dockerfile: docker/server/Dockerfile
+    image: ${IMAGE_PREFIX:-team-nova}-server:${IMAGE_TAG:-local}
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      MONGO_URI: ${MONGO_URI:-mongodb://mongo:27017/teamnova}
+      CLIENT_URL: ${CLIENT_URL:-http://localhost:8080}
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env}
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  client:
+    build:
+      context: .
+      dockerfile: docker/client/Dockerfile
+    image: ${IMAGE_PREFIX:-team-nova}-client:${IMAGE_TAG:-local}
+    restart: unless-stopped
+    environment:
+      API_UPSTREAM: server:5000
+    ports:
+      - "${WEB_PORT:-8080}:8080"
+    depends_on:
+      server:
+        condition: service_healthy
+
+volumes:
+  mongo-data:
