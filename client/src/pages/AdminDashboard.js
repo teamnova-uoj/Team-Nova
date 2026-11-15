@@ -129,7 +129,7 @@ function SiteHistoryChart({ siteId, devices, sites }) {
 
   const controls = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px", marginBottom: "10px" }}>
-      <div style={{ display: "flex", gap: "6px" }}>
+      <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
         {Object.keys(PARAM_COLORS).map(key => (
           <button
             key={key}
@@ -722,7 +722,7 @@ function AdminDashboard() {
             </div>
 
             {/* Sections */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginBottom: "20px" }}>
+            <div className="am-grid-2col">
 
               <div className="am-card" style={{ padding: "18px 20px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>

@@ -701,7 +701,7 @@ function UserDashboard() {
       </div>
 
       {/* Two Column Section: Devices Needing Maintenance (read-only) & Recent Alerts */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "20px", marginBottom: "20px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "20px", marginBottom: "20px" }}>
         {/* Devices Needing Maintenance */}
         <div className="ul-card" style={{ padding: "18px 20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
@@ -805,10 +805,11 @@ function UserDashboard() {
             </p>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <label className="ul-lbl" style={{ margin: 0 }}>Monitoring Site:</label>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", width: "100%", maxWidth: "420px" }}>
+            <label className="ul-lbl" style={{ margin: 0, whiteSpace: "nowrap" }}>Monitoring Site:</label>
             <select
               className="ul-select"
+              style={{ flex: 1, minWidth: "180px" }}
               value={selectedSiteId}
               onChange={(e) => setSelectedSiteId(e.target.value)}
               disabled={loading || sites.length === 0}

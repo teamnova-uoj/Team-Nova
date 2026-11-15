@@ -113,7 +113,7 @@ function UserSensors() {
           ))}
         </select>
 
-        <label className="ul-lbl" style={{ marginLeft: '12px' }}>Status:</label>
+        <label className="ul-lbl">Status:</label>
         <select
           className="ul-select"
           value={statusFilter}

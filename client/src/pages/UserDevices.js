@@ -114,7 +114,7 @@ function UserDevices() {
           {sites.map(s => <option key={s._id} value={s._id}>{s.name} ({s.region})</option>)}
         </select>
 
-        <label className="ul-lbl" style={{ marginLeft: '12px' }}>Status:</label>
+        <label className="ul-lbl">Status:</label>
         <select
           className="ul-select"
           value={statusFilter}

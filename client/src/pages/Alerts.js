@@ -144,7 +144,7 @@ function Alerts() {
           {sites.map(s => <option key={s._id} value={s._id}>{s.name}</option>)}
         </select>
 
-        <label className="ul-lbl" style={{ marginLeft: '12px' }}>Severity:</label>
+        <label className="ul-lbl">Severity:</label>
         <select
           className="ul-select"
           value={severityFilter}
@@ -157,7 +157,7 @@ function Alerts() {
           <option value="low">Low</option>
         </select>
 
-        <label className="ul-lbl" style={{ marginLeft: '12px' }}>Status:</label>
+        <label className="ul-lbl">Status:</label>
         <select
           className="ul-select"
           value={statusFilter}

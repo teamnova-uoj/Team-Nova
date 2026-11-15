@@ -648,9 +648,16 @@
 }
 
 @media (max-width: 768px) {
-    .mu-main    { padding: 20px 16px; }
-  .mu-header  { flex-direction: column; gap: 14px; }
-  .mu-stats   { grid-template-columns: repeat(2, 1fr); }
-  .mu-card    { overflow-x: auto; }
+  .mu-main    { padding: 72px 16px 24px !important; margin-left: 0 !important; }
+  .mu-header  { flex-direction: column; gap: 12px; }
+  .mu-title   { font-size: 22px; }
+  .mu-stats   { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .mu-card    { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 10px; }
   .mu-table   { min-width: 600px; }
+  .mu-pending-banner { flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px 16px; }
+}
+
+@media (max-width: 480px) {
+  .mu-stats   { grid-template-columns: 1fr !important; }
+  .mu-stat-card { padding: 14px 16px; }
 }
