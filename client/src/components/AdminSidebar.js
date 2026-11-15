@@ -146,8 +146,48 @@ function AdminSidebar({ activePage }) {
         aria-hidden="true"
       />
 
-      {/* ── Floating hamburger button ───────────────────── */}
-      {/* Visible on desktop when collapsed, or always on mobile via CSS */}
+      {/* ── Mobile Top Bar (Admin & Site Engineer) ──────── */}
+      <header className="admin-mobile-topbar">
+        <button
+          type="button"
+          className="admin-mobile-hamburger"
+          onClick={toggleSidebar}
+          title="Open navigation menu"
+          aria-label="Open navigation menu"
+          aria-expanded={drawerOpen}
+        >
+          <Menu size={22} />
+        </button>
+
+        <div
+          className="admin-mobile-brand"
+          onClick={() => {
+            setDrawerOpen(false);
+            navigate(isEngineer ? '/site-engineer-dashboard' : '/admin-dashboard');
+          }}
+        >
+          <img src={logoImg} alt="MangroveGuard Logo" style={{ height: '34px', width: 'auto' }} />
+          <div className="admin-mobile-titles">
+            <span className="admin-mobile-brand-name">MangroveGuard</span>
+            <span className="admin-mobile-badge">{isEngineer ? 'Site Engineer' : 'Admin'}</span>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          className="admin-mobile-avatar-btn"
+          onClick={() => {
+            setDrawerOpen(false);
+            setIsProfileOpen(true);
+          }}
+          title="Profile & Settings"
+          aria-label="Profile and Settings"
+        >
+          {user?.name?.[0]?.toUpperCase() || 'U'}
+        </button>
+      </header>
+
+      {/* ── Floating hamburger button (Desktop Collapsed only) ── */}
       <button
         type="button"
         className={`admin-sb-fab${sidebarCollapsed ? ' admin-sb-fab--show' : ''}`}

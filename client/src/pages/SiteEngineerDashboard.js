@@ -242,7 +242,7 @@ function SiteEngineerDashboard() {
             </div>
 
             {/* Devices & Sensors Section */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+            <div className="am-grid-2col">
               <div className="am-card" style={{ padding: '18px 20px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                   <h2 style={{ fontSize: '15px', fontWeight: 700, color: '#1c3a2a', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -322,51 +322,53 @@ function SiteEngineerDashboard() {
                 <Sliders size={18} color="#164e3d" />
                 <span>Adjust Site Parameter Thresholds</span>
               </h2>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
-                <thead>
-                  <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0', textAlign: 'left' }}>
-                    <th style={{ padding: '8px 12px' }}>Parameter</th>
-                    <th style={{ padding: '8px 12px' }}>Min Limit</th>
-                    <th style={{ padding: '8px 12px' }}>Max Limit</th>
-                    <th style={{ padding: '8px 12px' }}>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {thresholds.map((t, idx) => (
-                    <tr key={idx} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                      <td style={{ padding: '8px 12px' }}>
-                        <strong>{t.parameter?.label || 'Parameter'}</strong> ({t.parameter?.unit || 'unitless'})
-                      </td>
-                      <td style={{ padding: '8px 12px' }}>
-                        <input
-                          type="number"
-                          step="any"
-                          style={{ width: '80px', padding: '4px 8px', borderRadius: '4px', border: '1px solid #cbd5e1' }}
-                          value={t.min}
-                          onChange={e => handleThresholdChange(idx, 'min', e.target.value)}
-                        />
-                      </td>
-                      <td style={{ padding: '8px 12px' }}>
-                        <input
-                          type="number"
-                          step="any"
-                          style={{ width: '80px', padding: '4px 8px', borderRadius: '4px', border: '1px solid #cbd5e1' }}
-                          value={t.max}
-                          onChange={e => handleThresholdChange(idx, 'max', e.target.value)}
-                        />
-                      </td>
-                      <td style={{ padding: '8px 12px' }}>
-                        <button
-                          style={{ background: '#ef4444', color: '#fff', border: 'none', borderRadius: '4px', padding: '4px 8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
-                          onClick={() => handleRemoveThreshold(idx)}
-                        >
-                          Remove
-                        </button>
-                      </td>
+              <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+                <table style={{ width: '100%', minWidth: '520px', borderCollapse: 'collapse', fontSize: '13px' }}>
+                  <thead>
+                    <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0', textAlign: 'left' }}>
+                      <th style={{ padding: '8px 12px' }}>Parameter</th>
+                      <th style={{ padding: '8px 12px' }}>Min Limit</th>
+                      <th style={{ padding: '8px 12px' }}>Max Limit</th>
+                      <th style={{ padding: '8px 12px' }}>Action</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {thresholds.map((t, idx) => (
+                      <tr key={idx} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                        <td style={{ padding: '8px 12px' }}>
+                          <strong>{t.parameter?.label || 'Parameter'}</strong> ({t.parameter?.unit || 'unitless'})
+                        </td>
+                        <td style={{ padding: '8px 12px' }}>
+                          <input
+                            type="number"
+                            step="any"
+                            style={{ width: '80px', padding: '4px 8px', borderRadius: '4px', border: '1px solid #cbd5e1' }}
+                            value={t.min}
+                            onChange={e => handleThresholdChange(idx, 'min', e.target.value)}
+                          />
+                        </td>
+                        <td style={{ padding: '8px 12px' }}>
+                          <input
+                            type="number"
+                            step="any"
+                            style={{ width: '80px', padding: '4px 8px', borderRadius: '4px', border: '1px solid #cbd5e1' }}
+                            value={t.max}
+                            onChange={e => handleThresholdChange(idx, 'max', e.target.value)}
+                          />
+                        </td>
+                        <td style={{ padding: '8px 12px' }}>
+                          <button
+                            style={{ background: '#ef4444', color: '#fff', border: 'none', borderRadius: '4px', padding: '4px 8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                            onClick={() => handleRemoveThreshold(idx)}
+                          >
+                            Remove
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
               <div style={{ marginTop: '16px', display: 'flex', gap: '10px', alignItems: 'center' }}>
                 <select

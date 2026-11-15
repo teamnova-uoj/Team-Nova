@@ -132,6 +132,22 @@ function UserLayout({
             </button>
           </div>
 
+          {/* Search inside drawer for mobile */}
+          <div className="ul-drawer-search">
+            <form className="ul-search-form" onSubmit={handleSearch}>
+              <input
+                type="text"
+                className="ul-search-input"
+                placeholder="Search sites, hardware, alerts..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <button type="submit" className="ul-search-btn" title="Search">
+                <Search size={16} />
+              </button>
+            </form>
+          </div>
+
           <nav className="ul-nav" aria-label="Main Navigation">
             {menuItems.map(({ key, to, icon, label }) => {
               const isActive = activePage === key;
@@ -231,6 +247,12 @@ function UserLayout({
                 <Menu size={20} />
               </button>
 
+              {/* Mobile-only brand logo */}
+              <div className="ul-topbar-mobile-brand" onClick={() => navigate('/dashboard')}>
+                <img src={logoImg} alt="MangroveGuard Logo" style={{ height: "34px", width: "auto" }} />
+                <span>MangroveGuard</span>
+              </div>
+
               <form className="ul-search-form" onSubmit={handleSearch}>
                 <input
                   type="text"
@@ -243,6 +265,19 @@ function UserLayout({
                   <Search size={16} />
                 </button>
               </form>
+            </div>
+
+            {/* Topbar Right - avatar / quick profile button */}
+            <div className="ul-topbar-right">
+              <button
+                type="button"
+                className="ul-topbar-avatar"
+                onClick={() => setIsProfileOpen(true)}
+                title="Account Profile / Settings"
+                aria-label="Open user profile settings"
+              >
+                {user?.name?.[0]?.toUpperCase() || 'U'}
+              </button>
             </div>
           </div>
 
